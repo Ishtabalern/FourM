@@ -1,0 +1,59 @@
+<?php
+include 'db.php';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Products</title>
+    <script>
+        function calculateTotal() {
+            let total = 0;
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const price = parseFloat(product.dataset.price);
+                const quantity = parseInt(product.querySelector('.quantity').value);
+                total += price * quantity;
+            });
+            document.getElementById('totalCost').innerText = `Total Cost: $${total.toFixed(2)}`;
+        }
+
+        function showOrderSummary() {
+            const orderSummary = document.getElementById('orderSummary');
+            orderSummary.innerHTML = '';
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const name = product.dataset.name;
+                const price = parseFloat(product.dataset.price);
+                const quantity = parseInt(product.querySelector('.quantity').value);
+                if (quantity > 0) {
+                    const item = document.createElement('div');
+                    item.innerText = `${name} - $${price} x ${quantity} = $${(price * quantity).toFixed(2)}`;
+                    orderSummary.appendChild(item);
+                }
+            });
+            calculateTotal();
+        }
+    </script>
+</head>
+<body>
+    <h2>Order Products</h2>
+    <form method="post" action="process_order.php" onsubmit="return confirm('Are you sure you want to place this order?')">
+        <?php
+        $sql = "SELECT * FROM products";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()):
+        ?>
+        <div class="product" data-id="<?php echo $row['id']; ?>" data-name="<?php echo $row['name']; ?>" data-price="<?php echo $row['price']; ?>">
+            <label>
+                <?php echo $row['name']; ?> - $<?php echo $row['price']; ?> (Stock: <?php echo $row['stock']; ?>)
+                <input type="number" class="quantity" name="products[<?php echo $row['id']; ?>]" min="0" max="<?php echo $row['stock']; ?>" value="0" onchange="showOrderSummary()">
+            </label>
+        </div>
+        <?php endwhile; ?>
+        <div id="orderSummary"></div>
+        <p id="totalCost">Total Cost: $0.00</p>
+        <input type="submit" value="Place Order">
+    </form>
+</body>
+</html>
