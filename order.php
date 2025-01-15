@@ -1,11 +1,5 @@
 <?php
 include 'db.php';
-session_start();
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -18,20 +12,57 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #fff;
-            background-image: url(img/landing.jpg);
+            background-image: url(img/bg.jpg);
             margin: 0;
             padding: 0;
         }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color:rgb(238, 113, 68);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px; /* Adjust based on your logo size */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .navbar img {
+            width: 80px;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 20px;
+            margin-right: 50px;
+        }
+
+        .navbar nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar nav a:hover {
+            color: #ffa382;
+        }
+
         .container {
-            margin-top: 100px;
             width: 80%;
             margin: 0 auto;
+            margin-top: 200px; /* Adjust to match the height of the navbar */
             padding: 20px;
             background-color: #ffa382;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
         }
+        
         h3 {
             color: #333;
         }
@@ -241,10 +272,17 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </script>
 </head>
 <body>
-    <div class="top">
+    <!-- Navbar -->
+    <div class="navbar">
         <a href="index.html">
-        <img src="img/logo.png" alt="">
+            <img src="img/logo.png" alt="Logo">
         </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
     </div>
     <div class="container">
         <div class="products">
