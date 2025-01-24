@@ -125,6 +125,7 @@ include 'db.php';
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
+            margin-top: 10px;
         }
 
         .quantity-controls button {
@@ -236,6 +237,14 @@ include 'db.php';
         .cart .place-order:hover {
             background-color: #e66038;
         }
+        .low-stock-warning {
+            color: #e67e22;
+            font-weight: bold;
+        }
+        .no-stock {
+            color: #e74c3c;
+            font-weight: bold;
+        }
 
     </style>
     <script>
@@ -336,6 +345,17 @@ include 'db.php';
                 <img src="<?php echo $row['image_url']; ?>" alt="<?php echo $row['name']; ?>">
                 <h4><?php echo $row['name']; ?></h4>
                 <p>₱<?php echo $row['price']; ?></p>
+                <?php 
+                                    if ($row["stock"] == 0) {
+                                        echo '<span class="no-stock">Not Available </span>';
+                                    } elseif ($row["stock"] < 10) {
+                                        echo '<span class="low-stock-warning">Limited Stock:</span>';
+                                        echo '<span class="quantity">' . "&nbsp;" . $row["stock"] . '</span>';
+                                    } else {
+                                        echo '<span class="stock">Stock: </span>';
+                                        echo $row["stock"];
+                                    }
+                                    ?>
                 <div class="quantity-controls">
                     <button onclick="decreaseQuantity(<?php echo $row['id']; ?>)">-</button>
                     <span id="quantity_value_<?php echo $row['id']; ?>">0</span>
