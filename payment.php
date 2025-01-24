@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sale_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,44 +63,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sale_id'])) {
             padding: 0;
         }
         .container {
-            width: 80%;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 350px;
+            margin: 50px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 50px;
+            border-radius: 8px;
         }
         h1 {
             text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         .payment-form {
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         .payment-form input, .payment-form button {
             padding: 10px;
-            margin: 10px 0;
-            width: 300px;
+            margin: 8px 0;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         .payment-form button {
-            background-color: #e46f57;
+            background-color: #5cb85c;
             color: white;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
         .payment-form button:hover {
-            background-color: #f14b2a;
+            background-color: #4cae4c;
         }
         .payment-method {
-            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
-        .payment-method img{
-            margin-left: 215px;
-            margin-top: -10px;
-            position: absolute;
-            width: 50px;
+        .payment-method label {
+            display: flex;
+            align-items: center;
+        }
+        .payment-method i {
+            margin-right: 8px;
+        }
+        #card-info, #cash-info {
+            display: none;
+        }
+        #total {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -109,27 +125,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sale_id'])) {
         <form class="payment-form" method="POST" action="payment.php">
             <input type="hidden" name="sale_id" value="<?php echo $sale_id; ?>">
             <input type="hidden" name="total" value="<?php echo $total; ?>">
-            <p>Total Amount: ₱<?php echo number_format($total, 2); ?></p>
+
+            <div id="total">Total: ₱<?php echo number_format($total, 2); ?></div>
             
             <div class="payment-method">
                 <label>
-                    <img src="img/cliparts/credit.png" alt="">
-                    <input type="radio" name="payment_method" value="card" checked> Credit/Debit Card
+                    <i class="fas fa-credit-card"></i> 
+                    <input type="radio" name="payment_method" value="card" checked> Card
                 </label>
                 <label>
-                    <img src="img/cliparts/cash.png" alt="">
+                    <i class="fas fa-money-bill-wave"></i>
                     <input type="radio" name="payment_method" value="cash"> Cash
                 </label>
             </div>
 
             <div id="card-info">
                 <input type="text" name="card_number" placeholder="Card Number">
-                <input type="text" name="card_name" placeholder="Name on Card">
+                <input type="text" name="card_name" placeholder="Cardholder Name">
                 <input type="text" name="expiry_date" placeholder="Expiry Date (MM/YY)">
                 <input type="text" name="cvv" placeholder="CVV">
             </div>
 
-            <div id="cash-info" style="display: none;">
+            <div id="cash-info">
                 <input type="number" step="0.01" name="amount_given" placeholder="Amount Given">
             </div>
 

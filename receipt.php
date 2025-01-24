@@ -47,59 +47,119 @@ if (isset($_GET['sale_id']) && isset($_GET['change'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 60%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 50px;
-        }
-        h1, h2, h3 {
-            text-align: center;
-        }
-        .receipt {
-            margin-top: 20px;
-        }
-        .receipt table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .receipt table, .receipt th, .receipt td {
-            border: 1px solid black;
-        }
-        .receipt th, .receipt td {
-            padding: 10px;
-            text-align: left;
-        }
-        .receipt .total {
-            font-weight: bold;
-        }
-        .receipt .change {
-            color: green;
-            font-weight: bold;
-        }
-        .back-button {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #e46f57;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .back-button:hover {
-            background-color: #f14b2a;
-        }
-    </style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 60%;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        border-radius: 10px;
+    }
+
+    h1, h2, h3 {
+        text-align: center;
+        color: #333;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #e77a00;
+    }
+
+    h2 {
+        font-size: 20px;
+        color: #555;
+    }
+
+    .receipt {
+        margin-top: 20px;
+    }
+
+    .receipt table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .receipt th, .receipt td {
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+        border: 1px solid #ddd;
+    }
+
+    .receipt th {
+        background-color: #e77a00;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .receipt td {
+        background-color: #f9f9f9;
+    }
+
+    .receipt tr:nth-child(even) td {
+        background-color: #f1f1f1;
+    }
+
+    .receipt .total {
+        font-weight: bold;
+        background-color: #f9f9f9;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .receipt .change {
+        font-weight: bold;
+        background-color: #e9f7ef;
+        font-size: 18px;
+        color: #28a745;
+    }
+
+    .back-button {
+        display: block;
+        width: 220px;
+        margin: 30px auto;
+        padding: 12px;
+        background-color: #e46f57;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .back-button:hover {
+        background-color: #f14b2a;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .receipt .change span {
+        font-size: 18px;
+        color: #28a745;
+    }
+
+    /* Add a subtle shadow on the table rows */
+    .receipt tr {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .receipt tr:hover {
+        background-color: #fff8e1;
+        transform: translateY(-2px);
+    }
+</style>
+
 </head>
 <body>
     <div class="container">

@@ -8,43 +8,44 @@ include 'db.php';
     <title>Order Products</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
+        /* Global Styles */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #fff;
-            background-image: url(img/bg.jpg);
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
         }
 
         .navbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center align the navigation links */
             align-items: center;
-            padding: 15px 30px;
-            background-color:rgb(238, 113, 68);
+            padding: 15px -20px;
+            background-color: rgb(238, 113, 68);
             color: #fff;
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px; /* Adjust based on your logo size */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+                }
+
         .navbar img {
             width: 80px;
+            position: relative;
+           
         }
 
         .navbar nav {
             display: flex;
             gap: 20px;
-            margin-right: 50px;
         }
 
         .navbar nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 16px;
+            font-weight: 600;
             transition: color 0.3s ease;
         }
 
@@ -52,150 +53,190 @@ include 'db.php';
             color: #ffa382;
         }
 
+        /* Main Container */
         .container {
-            width: 80%;
-            margin: 0 auto;
-            margin-top: 200px; /* Adjust to match the height of the navbar */
-            padding: 20px;
-            background-color: #ffa382;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 100px;
+            padding: 0 30px;
         }
-        
-        h3 {
+
+        .products {
+            flex: 1 1 65%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .products h2 {
+    grid-column: 1 / -1; 
+    text-align: center;
+    font-size: 28px;
+    color: #ff7043;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+
+        .product img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        .product h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 10px 0;
             color: #333;
         }
-        h2 {
-            font-family: berlin, courier;
-            font-size: 100px;
-            font-weight: 1000;
-            color: #fff;
-            -webkit-text-stroke: 3px;
-            -webkit-text-stroke-color: rgb(235, 100, 77);
-            margin-bottom: 10px;
-            margin-top: 5px;
-            text-align: center;
+
+        .product p {
+            font-size: 14px;
+            color: #777;
+            margin: 10px 0 15px;
         }
-        .products {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 70%;
+
+        .product .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff7043;
+            margin-bottom: 15px;
         }
-        .product {
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            padding: 10px;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .product img {
-            max-width: 220px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-        .product label {
-            text-align: center;
-            width: 100%;
-        }
+
         .quantity-controls {
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin: 10px 0;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
+
         .quantity-controls button {
-            padding: 5px 10px;
-            background-color: #e36e5a;
+            background-color: #ff7043;
             color: #fff;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
+            font-size: 14px;
             transition: background-color 0.3s ease;
         }
+
         .quantity-controls button:hover {
-            background-color: #ed543a;
+            background-color: #e66038;
         }
+
         .quantity-controls span {
-            margin: 0 10px;
             font-size: 16px;
-            width: 30px;
-            text-align: center;
+            font-weight: 600;
+            color: #333;
         }
-        button.add-to-cart {
-            padding: 5px 10px;
-            background-color: #6d3a37;
+
+        .product .add-to-cart {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff7043;
             color: #fff;
-            border: none;
-            border-radius: 3px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
-        button.add-to-cart:hover {
-            background-color: #5c221e;
+
+        .product .add-to-cart:hover {
+            background-color: #c5001f;
         }
+
+        /* Cart Styles */
         .cart {
-            width: 25%;
-            background-color: #f8f9fa;
+            flex: 1 1 30%;
+            background-color: #fff;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: sticky;
-            top: 20px;
+            top: 100px;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
         }
-        .cart-item {
+
+        .cart h3 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .cart .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
         }
-        .cart-item button {
+
+        .cart .cart-item button {
+            background-color: #ff7043;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             padding: 5px 10px;
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
             cursor: pointer;
+            font-size: 12px;
             transition: background-color 0.3s ease;
         }
-        .cart-item button:hover {
-            background-color: #c82333;
+
+        .cart .cart-item button:hover {
+            background-color: #e66038;
         }
-        #totalCost {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .place-order {
+
+        .cart #totalCost {
+            font-weight: 700;
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #6d3a37;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .cart .place-order {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #ff7043;
             color: #fff;
             border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .place-order:hover {
-            background-color: #5c221e;
-        }
-        .top {
+            border-radius: 8px;
             text-align: center;
-            margin-top: 0;
-            padding: 1pt;
-            border: 0px;
-            margin-bottom: 160px;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 20px;
+            cursor: pointer;
         }
-        .top img {
-            position: absolute;
-            margin-top: -25px;
-            margin-left: -120px;
-            width: 200px;
+
+        .cart .place-order:hover {
+            background-color: #e66038;
         }
+
     </style>
     <script>
         let cart = {};
@@ -257,7 +298,7 @@ include 'db.php';
                 `;
                 cartSummary.appendChild(item);
             }
-            document.getElementById('totalCost').innerText = `Total Cost: ₱${calculateTotal()}`;
+            document.getElementById('totalCost').innerText = `Total: ₱${calculateTotal()}`;
         }
 
         function submitOrder() {
@@ -272,8 +313,7 @@ include 'db.php';
     </script>
 </head>
 <body>
-    <!-- Navbar -->
-    <div class="navbar">
+<div class="navbar">
         <a href="index.html">
             <img src="img/logo.png" alt="Logo">
         </a>
@@ -285,33 +325,31 @@ include 'db.php';
         </nav>
     </div>
     <div class="container">
-        <div class="products">
-            <h2></h2>
-            <h2>Menu</h2>
-            <h2></h2>
+            <div class="products">
+            <h2>Four-M Menu</h2>
             <?php
             $sql = "SELECT * FROM products";
             $result = $conn->query($sql);
             while ($row = $result->fetch_assoc()):
             ?>
-            <div class="product" data-id="<?php echo $row['id']; ?>" data-name="<?php echo $row['name']; ?>" data-price="<?php echo $row['price']; ?>">
+            <div class="product" data-id="<?php echo $row['id']; ?>">
                 <img src="<?php echo $row['image_url']; ?>" alt="<?php echo $row['name']; ?>">
-                <label>
-                    <?php echo $row['name']; ?> - ₱<?php echo $row['price']; ?> 
-                    <div class="quantity-controls">
-                        <button type="button" onclick="decreaseQuantity(<?php echo $row['id']; ?>)">-</button>
-                        <span id="quantity_value_<?php echo $row['id']; ?>">0</span>
-                        <button type="button" onclick="increaseQuantity(<?php echo $row['id']; ?>, <?php echo $row['stock']; ?>)">+</button>
-                    </div>
-                    <button type="button" class="add-to-cart" onclick="addToCart(<?php echo $row['id']; ?>, '<?php echo $row['name']; ?>', <?php echo $row['price']; ?>, <?php echo $row['stock']; ?>)">Add to Cart</button>
-                </label>
+                <h4><?php echo $row['name']; ?></h4>
+                <p>₱<?php echo $row['price']; ?></p>
+                <div class="quantity-controls">
+                    <button onclick="decreaseQuantity(<?php echo $row['id']; ?>)">-</button>
+                    <span id="quantity_value_<?php echo $row['id']; ?>">0</span>
+                    <button onclick="increaseQuantity(<?php echo $row['id']; ?>, <?php echo $row['stock']; ?>)">+</button>
+                </div>
+                <button class="add-to-cart" onclick="addToCart(<?php echo $row['id']; ?>, '<?php echo $row['name']; ?>', <?php echo $row['price']; ?>, <?php echo $row['stock']; ?>)">Add to Cart</button>
             </div>
             <?php endwhile; ?>
         </div>
-        <div class="cart">
+
+                <div class="cart">
             <h3>Your Cart</h3>
             <div id="cartSummary"></div>
-            <p id="totalCost">Total Cost: ₱0.00</p>
+            <p id="totalCost">Total: ₱0.00</p>
             <form method="post" action="process_order.php" id="orderForm" onsubmit="return submitOrder()">
                 <input type="submit" class="place-order" value="Place Order">
             </form>

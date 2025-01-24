@@ -42,67 +42,106 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-image: url(img/landing.jpg);
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
         }
+
         .container {
-            width: 50%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 100px;
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
         }
+
         h1 {
             text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
+
         .login-form {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 15px;
         }
-        .login-form input, .login-form button {
-            padding: 10px;
-            margin: 10px 0;
-            width: 300px;
+
+        .login-form input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            transition: border 0.3s;
         }
+
+        .login-form input:focus {
+            border: 1px solid #ff7e5f;
+        }
+
         .login-form button {
-            background-color: #ef8963;
+            padding: 12px;
+            background: #ff7e5f;
             color: white;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s;
         }
+
         .login-form button:hover {
-            background-color: #e46f57;
+            background: #ff5733;
         }
+
         .error {
-            color: red;
             text-align: center;
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
-        .back-button{
-            padding: 10px;
-            width: 100px;
-            margin: 10px 0;
+
+        .back-button {
             text-align: center;
-            color: #fff;
-            background-color: #f76d3b;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
             text-decoration: none;
+            display: block;
+            padding: 10px;
+            background: #ddd;
+            color: #333;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
         }
-        .back-button:hover{
-            background-color: #e46f57;
+
+        .back-button:hover {
+            background: #bbb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .login-form input, .login-form button {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1>Four-M Login</h1>
         <?php if (isset($error)) : ?>
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>
@@ -112,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Login</button>
             <a href="index.html" class="back-button">Back</a>
         </form>
-        
     </div>
 </body>
 </html>

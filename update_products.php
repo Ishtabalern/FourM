@@ -16,64 +16,104 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Products</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            color: #495057;
         }
         .container {
             width: 80%;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 40px auto;
             padding: 20px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         h3 {
-            color: #333;
-        }
-        form {
+            font-size: 1.4em;
+            font-weight: 500;
+            color: #343a40;
+            text-align: center;
             margin-bottom: 20px;
         }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
         label {
-            display: block;
-            margin-top: 10px;
+            font-size: 1em;
+            font-weight: 400;
+            color: #495057;
         }
         input[type="text"], input[type="number"] {
-            width: 100%;
-            max-width: 300px;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
         }
         input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 10px 18px;
+            font-size: 1em;
             color: #fff;
-            background-color: #007bff;
+            background-color: #ff5500;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color:rgb(211, 123, 79);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
+            margin-top: 30px;
         }
         th, td {
             padding: 8px;
             text-align: left;
+            font-size: 0.95em;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #f1f3f5;
+            color: #495057;
+            font-weight: 500;
+        }
+        td {
+            background-color: #ffffff;
+            color: #495057;
+            border-bottom: 1px solid #e9ecef;
+        }
+        tr:hover td {
+            background-color: #f8f9fa;
+        }
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            input[type="submit"] {
+                font-size: 0.95em;
+                padding: 8px 14px;
+            }
         }
     </style>
 </head>
@@ -93,26 +133,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="submit" value="Update">
         </form>
 
-        <h3>Products</h3>
+        <h3>Product List</h3>
         <table>
-            <tr>
-                <th>Product ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-            </tr>
-            <?php
-            $sql = "SELECT * FROM products";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()):
-            ?>
-            <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['name']; ?></td>
-                <td>₱<?php echo number_format($row['price'], 2); ?></td>
-                <td><?php echo $row['stock']; ?></td>
-            </tr>
-            <?php endwhile; ?>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT * FROM products";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()):
+                ?>
+                <tr>
+                    <td><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['name']; ?></td>
+                    <td>₱<?php echo number_format($row['price'], 2); ?></td>
+                    <td><?php echo $row['stock']; ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
         </table>
     </div>
 </body>

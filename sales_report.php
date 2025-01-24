@@ -2,7 +2,7 @@
 include 'db.php';
 ?>
 
-<h3>Sales Report</h3>
+
 <table border="1" cellspacing="0" cellpadding="10">
     <tr>
         <th>Sale ID</th>
